@@ -179,6 +179,18 @@ Run the GUI:
 python main.py
 ```
 
+Before connecting to the board, confirm the GUI can start:
+
+```bash
+python main.py
+```
+
+Then confirm the Boolean Board UART is visible:
+
+```bash
+python3 -m serial.tools.list_ports -v
+```
+
 GUI flow:
 
 1. Connect the Boolean Board USB cable.
