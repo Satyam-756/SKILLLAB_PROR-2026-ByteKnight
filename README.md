@@ -105,7 +105,7 @@ List what inspired the project.
 
 | Source Type | Title / Link                                                        | What Inspired You                                                                         |
 | ----------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `[Video]`   | `https://www.instagram.com/reel/DW4CT7WCDry/?igsh=cXg3dzAxYmdncDBo` | `How projection mapping can be used to create interactive digital + physical experiences` |
+| `[Video]`   | `https://youtu.be/u1DYs2I-_lU?si=Gk4ahYTsZ5KwAL_K` | `learned how to troubleshoot digital circuits by capturing, triggering, and decoding serial protocols like I2C, SPI, and UART using a logic analyzer.` |
 |             |                                                                     |                                                                                           |
 |             |                                                                     |                                                                                           |
 
@@ -114,7 +114,7 @@ List what inspired the project.
 What makes your project original?
 
 **Response:**  
-
+Unlike PC-based logic analyzers that rely on slow USB polling, our FPGA does real‑time 100 MHz sampling and triggering in hardware, then streams only the captured buffer – giving deep memory at low cost
 
 ---
 
@@ -125,6 +125,33 @@ What makes your project original?
 Describe exactly how a user will use the project.Make it a story
 **Response:**  
 
+A student debugging their Arduino project:
+
+Step 1: Connect (2 min)
+Plug FPGA board into laptop via USB. Connect 4 jumper wires from Arduino signals to FPGA input pins.
+
+Step 2: Launch 
+Run python main.py → GUI window opens.
+
+Step 3: Connect 
+Select COM port → Click "Connect" → LED blinks once.
+
+Step 4: Configure 
+Trigger: Rising edge on Channel 0
+
+Sample rate: 1 MHz
+
+Click "Arm Trigger"
+
+Step 5: Capture (Automatic)
+Run Arduino code → FPGA detects trigger instantly → Captures 2048 samples → Streams to laptop → GUI plots waveform automatically.
+
+Step 6: Analyze
+See the bug in color-coded waves. Fix timing error. Re-test.
+
+Step 7: Export
+Save as CSV for documentation
+
                                                   |
 
 
@@ -134,7 +161,7 @@ Describe exactly how a user will use the project.Make it a story
 # 4. Definition of Success
 
 ## 4.1 Definition of “Usable”
-
+The system is usable when a user can connect the FPGA to a PC, select the COM port, set a simple trigger (e.g., rising edge on channel 0), capture at least 1024 samples, and view the waveform plot
 
 
 ## 4.2 Minimum Usable Version
@@ -142,11 +169,13 @@ Describe exactly how a user will use the project.Make it a story
 What is the smallest version of this project that still delivers the core experience?
 
 **Response:**  
+Multi-channel (8) digital signal capture with edge-based triggering and Python GUI visualization at up to 1 MHz sampling
 
 ## 4.3 Stretch Features
 
 What features are nice to have but not essential?
 
+Protocol decoding (I2C, SPI), higher sample rates (25 MHz), and multiple trigger conditions
 
 ---
 
@@ -164,17 +193,17 @@ Check all that apply.
 
 - [x] App-connected
 
-- [x] Motorized
+- [ ] Motorized
 
 - [ ] Sound-based
 
-- [x] Light-based
+- [ ] Light-based
 
 - [x] Screen/UI-based
 
-- [x] Fabricated structure
+- [ ] Fabricated structure
 
-- [x] Game logic based
+- [ ] Game logic based
 
 - [x] Installation
 
@@ -193,6 +222,7 @@ Include:
 - app interaction if any.
 
 **Response:**  
+This project transforms the Boolean Board into an 8‑channel logic analyzer. It captures signals from an Arduino Uno (or any 3.3V logic) via the Pmod header, stores samples in BRAM, and streams to a Python GUI over USB‑UART
 
 ## 5.3 Input / Output Map
 
@@ -229,17 +259,17 @@ Add a sketch with labels showing:
 - output elements.
 
 **Insert image below:**  
-`[Upload image and link here]`
-<img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/95637f31-b4e7-4427-a9e1-4b63fbeb0ac5" />
+
+<img width="1600" height="1200" alt="image" src="https://github.com/Satyam-756/SKILLLAB_PROR-2026-ByteKnight/blob/main/images/logic_analyzer_flowchart.jpg" />
 
 ## 6.3 Approximate Dimensions
 
-| Dimension        | Value   |
-| ---------------- | ------- |
-| Length           | `16 cm` |
-| Width            | `16 cm` |
-| Height           | `8 cm`  |
-| Estimated weight | `400 g` |
+| Dimension        | Value      |
+| ---------------- | -------    |
+| Length           | `24.13 cm` |
+| Width            | `17.78 cm` |
+| Height           | ` 5 cm`    |
+| Estimated weight | `635 gm`    |
 
 ---
 
@@ -249,24 +279,18 @@ Add a sketch with labels showing:
 
 | Component                 | Quantity | Purpose                               |
 | ------------------------- | --------:| ------------------------------------- |
-| `[Raspi/FPGA]`                 | `1`      | `[Main controller]`                   |
-| `[L298N Motor Driver]`    | `1`      | `[Control Motors]`                    |
-| `[BO Motors]`             | `2`      | `[Rotate wheels]`                     |
-| `[Buck Converter]`        | `1`      | `[Power ESP32]`                       |
+| `[Boolean Board(spartan7)`| `1`      | `	Main FPGA`                         |
+| `Arduino Uno`             | `1`      | `Generate test signals`               |
+| `USB cable`               | `1`      | `Power+UART     `                     |
+| `[Jumper wires (M‑F)]`    | `8`      | `Connet Arduino to FPGA`              |
 | `[Li Ion Battery Pack]`   | `2`      | `[Power]`                             |
-| `[Projector]`             | `1`      | `[Display obstacles]`                 |
-| `Camera (Webcam / Phone)` | `1`      | `[Tracks car position using markers]` |
+
 
 ## 7.2 Wiring Plan
 
 Describe the main electrical connections.
 
-**sample Response:**  
-`The RASPI is connected to the motor driver (L298N) using four GPIO pins (18,19; 22,23) to control motor direction (IN1, IN2, IN3, IN4). Two PWM-capable pins (ENA and ENB; 25 and 26) are connected to control the speed of each motor.
-
-The motors are connected to the output terminals of the motor driver. The motor driver is powered directly by the battery pack (higher voltage), while the ESP32 receives regulated 5V from the buck converter.
-
-All components share a common ground to ensure stable operation. The projector and camera are connected to the laptop, which handles tracking and game logic separately.`
+`Connect Arduino Uno digital pins (e.g., D2–D9) to FPGA Pmod A pins (T6, T5, R5, T4, R7, R6, P6, P5). Share common ground between Arduino and FPGA. No level shifter needed because Arduino Uno runs at 5V – but FPGA inputs are 3.3V tolerant. For safety, use a simple voltage divider (10k/20k) if required. We tested directly and it worked..`
 
 ## 7.3 Circuit Diagram/architecture diagram
 
@@ -282,9 +306,9 @@ Insert a hand-drawn or software-made circuit diagram.
 | Question         | Response                                                                                                                                          |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Power source     | `Battery (Li-ion pack)`                                                                                                                           |
-| Voltage required | `~6–8.4V for motors (via driver), stepped down to 5V for ESP32 (buck converter)`                                                                  |
-| Current concerns | `Motors can draw high current under load, which may cause voltage drops affecting ESP32 and WiFi stability`                                       |
-| Safety concerns  | `Avoid over-discharging Li-ion batteries, ensure proper voltage regulation, prevent short circuits, and secure wiring to avoid loose connections` |
+| Voltage required | `5V (USB) → FPGA onboard 3.3V regulator`  |
+| Current concerns | `<500mA`                                  |
+| Safety concerns  | `Avoid connecting 5V signals to 3.3V pins without check; we verified Arduino’s 5V logic is within absolute max of Spartan‑7 (4.1V?) – we used series resistors.`                                             |
 
 ---
 
@@ -314,22 +338,12 @@ Include:
 - reset behavior.
 
 **Response:**  
-`
-
-- **Sample Startup behavior:**  
-  The Raspi/FPGA initializes motor pins, PWM control, and starts a WiFi access point with a web server. The laptop initializes camera input, tracking system, and projection mapping.
-- **Input handling:**  
-  Movement commands are received from the laptop (pygame sends http requests)
-- **Sensor reading:**  
-  The camera continuously captures frames, and OpenCV detects ArUco markers to determine the car’s position and orientation.
-- **Decision logic:**  
-  The system maps the car’s position into a virtual coordinate system and checks for nearby obstacles or collisions. If movement is valid, the command is allowed; if not, it is blocked or replaced with a feedback action (like a slight shake).
-- **Output behavior:**  
-  The ESP32 drives the motors using PWM signals to control speed and direction. The projector displays the updated game environment, including obstacles, targets, and feedback visuals.
-- **Communication logic:**  
-  The laptop sends HTTP requests (e.g., `/forward`, `/left`) to the ESP32 over WiFi. The ESP32 parses these commands and executes motor actions.
-- **Reset behavior:**  
-  If no command is received within a short timeout, the ESP32 stops the motors. The game resets when a level is completed or restarted.`
+Software (Python GUI)
+The logic_analyzer/ directory contains the desktop Python application to control the FPGA and read back data.
+* main.py: Standard entry point to start the Tkinter desktop GUI.
+* Serial Handler (serial_handler.py): Opens the COM port to receive bytes sent from the FPGA's UART module.
+* *Plotter & Decoder (plotter.py, decoder.py): Uses Matplotlib to plot the multi-channel logical levels on the screen and decode protocols (like I2C or SPI).
+* Data Management (exporter.py, etc.): Can export captured waveforms to CSV (e.g., work.csv).
 
 ## 8.3 Code Flowchart
 
@@ -370,14 +384,14 @@ Suggested sequence:
 Explain why you selected your main materials and components.
 
 **Response:**  
-`DC motors (BO motors) were chosen instead of servos or steppers because the system requires continuous rotation for movement rather than precise angular control (Previously, we were considering using steppers as we were planning on tracking movement on the ESP using its relative position from an origin, but since we're using a camera now, this is not required). A motor driver (L298N) was used to allow bidirectional control and speed variation using PWM.`
+`The Boolean Board was chosen because it has a fast FPGA, USB-UART bridge, and Pmod header – perfect for a logic analyzer.`
 
 
 ## 9.3 Items You chose
 
 | Item                 | Why Needed               | Purchase Link | Latest Safe Date to Procure | Status       |
 | -------------------- | ------------------------ | ------------- | --------------------------- | ------------ |
-| `BO Motors + Wheels` | `Drive system for car`   | `robu.in`     | `15th April`                | `[Received]` |
+| `Arduino Nano`         | `Drive system for car`   | `robu.in`     | `15th April`                | `[Received]` |
 | `Buck Converter`     | `Stable power for ESP32` | `local store` | `before testing`            | `[Received]` |
 | `Li-ion Batteries`   | `Portable power`         | `local store` | `before testing`            | `Recieved`   |
 
@@ -397,7 +411,7 @@ Explain why you selected your main materials and components.
 If your cost is too high, what can be simplified, removed, substituted, or shared?
 
 **Response:**  
-
+Cost is low because the main FPGA was provided. If needed, we can skip the Arduino and use internal test patterns
 ---
 
 # 10. Planning the Work
@@ -415,13 +429,16 @@ Include:
 - how documentation will be maintained.
 
 **Response:**  
-
+Tasks divided by module (Verilog, Python GUI, testing, docs). Decisions made by majority. Daily check-ins. Delayed tasks communicated 24h in advance. Documentation updated after each commit
 
 ## 10.2 Task Breakdown
 
 | Task ID | Task                    | Owner    | Estimated Hours | Deadline     | Dependency | Status |
 | ------- | ----------------------- | -------- | ---------------:| ------------ | ---------- | ------ |
-| T1      | `[Finalize concept]`    | `[Both]` | `2`             | `1st April`  | `None`     | `Done` |
+| T1      | `[Verilog trigger module]`    | `Raunak` | `4`             | `Day 1`  | `None`     | `Done` |
+| T2      | `	UART module`    | `Abhishek ` | `3`             | `Day 1`  | `None`     | `Done` |
+| T3     | `	Python GUI & integration`    | `Satyam` | `3`             | `Day 1`  | `None`     | `Done` |
+| T3     | `integration & Testing`    | `Archit` | `2`             | `Day 1`  | `None`     | `Done` |
 
 
 ## 10.3 Responsibility Split
