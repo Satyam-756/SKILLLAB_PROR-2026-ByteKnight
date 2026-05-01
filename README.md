@@ -383,7 +383,7 @@ Suggested sequence:
 | `Real Digital Boolean Board`                        | `1`      | `Yes`   | `No`         | `0`            | `Spartan-7 XC7S50`                | `Main high-speed logic processor and UART bridge.` |
 | `Arduino Nano`                 | `[1]`    | `[Yes]` | `[No]`       | `0`            | `ATmega328P`                     | `To generate known test signals for the analyzer.`  |
 | `USB Cable`          | `[1]`    | `[Yes]`  | `[No]`      | `[0]`        | `Data/Power transfer` | `[Powers FPGA & handles UART data stream.]`    |
-| `Jumper Wires`               | `[4]`    | `[Yes`  | `[No]`      | `[0]`         |                               |                           |
+| `Jumper Wires`               | `[8]`    | `[Yes`  | `[No]`      | `[0]`         |                               |                           |
 
 ## 9.2 Material Justification
 
@@ -406,11 +406,11 @@ Explain why you selected your main materials and components.
 | Budget Item           | Estimated Cost              |
 | --------------------- | ---------------------------:|
 | Electronics           | `[400]`                     |
-| Mechanical parts      | `[200]`                     |
+| Mechanical parts      | `[0]`                     |
 | Fabrication materials | `[0 (Available on campus)]` |
 | Purchased extras      | `[0]`                       |
 | Contingency           | `[300]`                     |
-| **Total**             | `[900]`                     |
+| **Total**             | `[700]`                     |
 
 ## 9.5 Budget Reflection
 
