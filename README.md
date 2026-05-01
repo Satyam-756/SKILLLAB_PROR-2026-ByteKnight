@@ -66,7 +66,7 @@ By the final review, this README should clearly show:
 | `Raunak Pandey`       | `[Electronics / Coding / App ]` | `Documentation`  | `Circuit design, hardware integration`|
 | `Abhishek Sharma`     | `[Electronics / coding]`        | `Coding`         | `Circuit design, hardware integration |
 | `Satyam Jha`          | `[Coding / Electroncis]`        | `Git`            | `coding,debugging,GIT`                |
-| `Archit Patil`        | `[Coding / Electronics]`        |`Git`             | `coding,ciruit design,documentation`  |
+| `Archit Patil`        | `[Coding / Electronics]`        | `Git`            | `coding,ciruit design,documentation`  |
 
 
 
@@ -152,7 +152,6 @@ See the bug in color-coded waves. Fix timing error. Re-test.
 Step 7: Export
 Save as CSV for documentation
 
-                                                  |
 
 
 
@@ -226,8 +225,14 @@ This project transforms the Boolean Board into an 8‑channel logic analyzer. It
 
 ## 5.3 Input / Output Map
 
-| System Part                              | Type            | What It Does                                                               |
-
+| System Part                 |Type |What it does                               |
+| ------------------------- | --------:| ------------------------------------- |
+| `Arduino Nano (Device Under Test)`| `Input Source`      |`Generates 5V digital logic signals to be analyzed.`|
+| `FPGA Pmod Headers`             | `Hardware Input`      | `Receives the physical electrical signals from the Arduino via jumper wires.`               |
+| `Spartan-7 FPGA`               | `Processing`      | `Samples inputs at 100 MHz, checks against trigger logic, and buffers the captured data in BRAM.`                     |
+| `UART Module (FPGA)`    | `Data Output`      | `Converts the parallel buffered data into a serial data stream (115200 baud) over USB.`              |
+| `Python GUI (Laptop)`   | `Software Output / UI`      | `Parses the incoming hex data, visualizes the waveforms on-screen, and accepts user trigger configurations.`                             |
+      
 
 ---
 
@@ -280,7 +285,7 @@ Add a sketch with labels showing:
 | Component                 | Quantity | Purpose                               |
 | ------------------------- | --------:| ------------------------------------- |
 | `[Boolean Board(spartan7)`| `1`      | `	Main FPGA`                         |
-| `Arduino Uno`             | `1`      | `Generate test signals`               |
+| `Arduino Nano`             | `1`      | `Generate test signals`               |
 | `USB cable`               | `1`      | `Power+UART     `                     |
 | `[Jumper wires (M‑F)]`    | `8`      | `Connet Arduino to FPGA`              |
 | `[Li Ion Battery Pack]`   | `2`      | `[Power]`                             |
@@ -290,7 +295,7 @@ Add a sketch with labels showing:
 
 Describe the main electrical connections.
 
-`Connect Arduino Uno digital pins (e.g., D2–D9) to FPGA Pmod A pins (T6, T5, R5, T4, R7, R6, P6, P5). Share common ground between Arduino and FPGA. No level shifter needed because Arduino Uno runs at 5V – but FPGA inputs are 3.3V tolerant. For safety, use a simple voltage divider (10k/20k) if required. We tested directly and it worked..`
+`Connect Arduino Nano digital pins (e.g., D2–D9) to FPGA Pmod A pins (T6, T5, R5, T4, R7, R6, P6, P5). Share common ground between Arduino and FPGA. No level shifter needed because Arduino Nano runs at 5V – but FPGA inputs are 3.3V tolerant. For safety, use a simple voltage divider (10k/20k) if required. We tested directly and it worked..`
 
 ## 7.3 Circuit Diagram/architecture diagram
 
@@ -318,10 +323,12 @@ Insert a hand-drawn or software-made circuit diagram.
 
 | Tool / Platform                | Purpose                                        |
 | ------------------------------ | ---------------------------------------------- |
-| `[MicroPython]`                | `Control ESP32`                                |
-| `[Python/PyGame/OpenCV]`       | `Track markers, game logic, create projection` |
-| `[Fusion/Blender/Illustrator]` | `[Prototyping structure]`                      |
-|                                |                                                |
+| `Xilinx Vivado`                | `FPGA synthesis, bitstream generation, and Verilog compilation.`|
+| `Python 3.3`       | `Core backend language for PC communication and data handling.` |
+| `Tkinter` | `Building the interactive desktop GUI window.`                      |
+| `PySerial`                      |`Managing the USB-UART serial connection between the PC and the FPGA.`|
+| `Matplotlib`                      |`Plotting and visualizing the multi-channel logical waveforms on the screen.`|
+| `Arduino IDE`                      |`Writing and uploading test signal code to the Arduino Nano.`|
 
 ## 8.2 Software Logic/Algorithm
 
@@ -373,11 +380,10 @@ Suggested sequence:
 
 | Item                             | Quantity | In Kit? | Need to Buy? | Estimated Cost | Material / Spec               | Why This Choice?          |
 | -------------------------------- | --------:| ------- | ------------ | --------------:| ----------------------------- | ------------------------- |
-| `[RASPI]`                        | `1`      | `Yes`   | `No`         | `0`            | `38 Pin ESP32`                | `[To control components]` |
-| `[Motor Driver]`                 | `[1]`    | `[Yes]` | `[No]`       | `0`            | `[LN296]`                     | `[To drive both motors]`  |
-| `[DC Motors and wheel]`          | `[2]`    | `[No]`  | `[Yes]`      | `[150]`        | `[BO Motors and 6 cm wheels]` | `[high torque motors]`    |
-| `[Buck Converter]`               | `[1]`    | `[No]`  | `[Yes]`      | `[75]`         |                               |                           |
-| `[Li-ion batteries with holder]` | `[1]`    | `[No]`  | `[Yes]`      | `[200]`        |                               |                           |
+| `Real Digital Boolean Board`                        | `1`      | `Yes`   | `No`         | `0`            | `Spartan-7 XC7S50`                | `Main high-speed logic processor and UART bridge.` |
+| `Arduino Nano`                 | `[1]`    | `[Yes]` | `[No]`       | `0`            | `ATmega328P`                     | `To generate known test signals for the analyzer.`  |
+| `USB Cable`          | `[1]`    | `[Yes]`  | `[No]`      | `[0]`        | `Data/Power transfer` | `[Powers FPGA & handles UART data stream.]`    |
+| `Jumper Wires`               | `[4]`    | `[Yes`  | `[No]`      | `[0]`         |                               |                           |
 
 ## 9.2 Material Justification
 
@@ -391,9 +397,9 @@ Explain why you selected your main materials and components.
 
 | Item                 | Why Needed               | Purchase Link | Latest Safe Date to Procure | Status       |
 | -------------------- | ------------------------ | ------------- | --------------------------- | ------------ |
-| `Arduino Nano`         | `Drive system for car`   | `robu.in`     | `15th April`                | `[Received]` |
-| `Buck Converter`     | `Stable power for ESP32` | `local store` | `before testing`            | `[Received]` |
-| `Li-ion Batteries`   | `Portable power`         | `local store` | `before testing`            | `Recieved`   |
+| `Boolean Board`         | `High-speed 100 MHz sampling & BRAM capacity`   | `Lab Provided`     | `Day 1`                | `[Received]` |
+| `Arduino Nano`     | `Reliable & programmable signal source for testing` | `local store` | `before testing`            | `[Received]` |
+| `Jumper Wires`   | `Physical connection between DUT and analyzer`         | `local store` | `before testing`            | `Recieved`   |
 
 ## 9.4 Budget Summary
 
@@ -411,7 +417,10 @@ Explain why you selected your main materials and components.
 If your cost is too high, what can be simplified, removed, substituted, or shared?
 
 **Response:**  
+
+
 Cost is low because the main FPGA was provided. If needed, we can skip the Arduino and use internal test patterns
+
 ---
 
 # 10. Planning the Work
