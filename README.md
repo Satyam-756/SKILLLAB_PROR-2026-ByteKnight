@@ -605,7 +605,8 @@ Suggested images:
 - mechanism test,
 - app screenshot,
 - final build.
-- <img width="960" height="1280" alt="WhatsApp Image 2026-04-24 at 9 46 02 AM (1)" src="https://github.com/user-attachments/assets/74baa570-5770-483e-be6d-d2f03386e37c" />
+- <img width="720" height="1280" alt="Embeddedhack" src="https://github.com/user-attachments/assets/f7bad705-8cec-4b03-a91f-aa7b6d86873e" />
+
 
 
 
@@ -619,12 +620,26 @@ Describe the final version of your project.
 
 **Response:**  
 
+Our final project is a fully functional, 8-channel Embedded Logic Analyzer. The Spartan-7 FPGA successfully samples incoming digital signals from an Arduino Nano at 100 MHz, waits for a user-defined hardware trigger (like a rising edge), and captures the state of all 8 channels into its internal Block RAM (BRAM). Once the capture is complete, it streams the hex data over a 115200 baud USB-UART connection to a custom Python GUI on a laptop, which accurately graphs the waveforms for easy debugging.
+
 
 ## 17.2 What Works Well
+
+Hardware Triggering: The Verilog state machine catches rising and falling edges instantly, ensuring we never miss the start of a signal.
+
+Data Visualization: The Matplotlib-based Python GUI renders the 8 channels clearly with distinct colors, making it very easy to read.
+
+Stability: The system reliably captures 2048 samples per trigger without dropping bytes over the UART connection.
 
 
 
 ## 17.3 What Still Needs Improvement
+
+Data Transfer Speed: While 115200 baud is standard, transferring large BRAM captures takes a second or two. Upgrading to a faster custom USB protocol would make it feel more instantaneous.
+
+Advanced Triggers: Currently, we only support simple edge triggers. Adding pattern triggers (e.g., trigger only when Ch1 is HIGH and Ch2 is LOW) would make it more powerful.
+
+Protocol Decoding: The GUI shows raw waveforms but does not yet automatically decode protocols like I2C or SPI into readable text (hex/ASCII).
 
 
 ## 17.4 What Changed From the Original Plan
@@ -633,7 +648,7 @@ How did the project change from the initial idea?
 
 **Response:**  
 
-
+Originally, we planned to stream data continuously from the FPGA to the PC in real-time. We quickly realized that the UART connection is far too slow to handle 100 MHz real-time data. We pivoted our architecture to use a "Capture and Dump" method: the FPGA stores the high-speed data temporarily in its BRAM, and then sends it slowly over UART to the PC to be plotted. We also added input debouncing in Verilog to handle noisy jumper wires, which wasn't in our initial scope.
 ---
 
 # 18. Reflection
@@ -646,6 +661,7 @@ How well did you manage time, tasks, and responsibilities?
 
 **Response:**  
 
+Our team did an excellent job splitting the workload based on our strengths—Raunak and Abhishek handled the Verilog/Hardware side, while Satyam and Archit built the Python software. What slowed us down the most was the integration phase; making sure the Python code correctly decoded the specific binary format sent by the FPGA took longer than expected. Overall, our daily check-ins kept us on track and ensured we didn't waste time on duplicate work.
 
 ## 18.2 Technical Reflection
 
@@ -659,6 +675,11 @@ What did you learn about:
 
 **Response:**  
 
+Electronics: We learned the critical importance of logic level shifting (5V vs 3.3V) and how floating inputs can act as antennas, requiring pull-down resistors.
+
+Coding: We deepened our understanding of Verilog State Machines (FSMs) and learned how to instantiate BRAM. In Python, we learned how to use pyserial and optimize Matplotlib for faster plotting.
+
+Integration: We learned that establishing a reliable "handshake" or strict data protocol between hardware and software is the most challenging and important part of an embedded system.
 
 ## 18.3 Design Reflection
 
@@ -673,6 +694,7 @@ What did you learn about:
 
 **Response:**  
 
+We learned that a tool is only as good as its user interface. Our raw data was accurate on Day 3, but the tool wasn't "usable" until we made the GUI visually clear. Adding distinct colors for channels, clear Y-axis labels, and an intuitive "Arm Trigger" button transformed a messy data stream into a delightful, professional-feeling debugging tool. Iterating on playtester feedback (like adding the "Export to CSV" button) vastly improved the user experience.
 
 ## 18.4 If You Had One More hour
 
@@ -680,7 +702,7 @@ What would you improve next?
 
 **Response:**  
 
-` `
+If we had one more hour, we would write a Python script extension to implement basic protocol decoding—specifically mapping the waveform timing to decode basic UART or I2C signals directly on the GUI screen, saving the user from having to read the binary pulses manually.
 
 ---
 
