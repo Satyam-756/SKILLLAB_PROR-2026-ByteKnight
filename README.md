@@ -649,7 +649,9 @@ How did the project change from the initial idea?
 
 **Response:**  
 
+
 Originally, we planned to stream data continuously from the FPGA to the PC in real-time. We quickly realized that the UART connection is far too slow to handle 100 MHz real-time data. We pivoted our architecture to use a "Capture and Dump" method: the FPGA stores the high-speed data temporarily in its BRAM, and then sends it slowly over UART to the PC to be plotted. We also added input debouncing in Verilog to handle noisy jumper wires, which wasn't in our initial scope.
+
 ---
 
 # 18. Reflection
