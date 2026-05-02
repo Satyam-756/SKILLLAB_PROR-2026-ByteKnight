@@ -243,7 +243,8 @@ This project transforms the Boolean Board into an 8‑channel logic analyzer. It
 Add an early sketch of the full idea.
 
 **Insert image below:**  
-`[Upload image and link here]`
+<img width="283" height="729" alt="CoceptArch" src="https://github.com/user-attachments/assets/8c7ffa13-c4ae-45b8-9a98-924404a50f84" />
+
 
 Example:
 
@@ -302,8 +303,8 @@ Describe the main electrical connections.
 Insert a hand-drawn or software-made circuit diagram.
 
 **Insert image below:**  
-`[Upload image and link here]`
-<img width="867" height="1156" alt="" src="" />
+<img width="825" height="307" alt="CircuitDiag" src="https://github.com/user-attachments/assets/73363254-32f6-45de-b52c-13165cf5408f" />
+
 
 
 # 7.4. Power Plan
@@ -368,8 +369,8 @@ Suggested sequence:
 - error handling.
 
 **Insert image below:**  
-<img width="1600" height="1200" alt="image" src="" />
-<img width="1600" height="1200" alt="image" src="" />
+<img width="825" height="665" alt="Flowchart123" src="https://github.com/user-attachments/assets/f9ccd7a7-5608-4da9-9140-15499fa2367b" />
+
 
 
 
