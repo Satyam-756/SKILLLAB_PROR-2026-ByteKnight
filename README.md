@@ -230,7 +230,7 @@ This project transforms the Boolean Board into an 8‑channel logic analyzer. It
 | `Arduino Nano (Device Under Test)`| `Input Source`      |`Generates 5V digital logic signals to be analyzed.`|
 | `FPGA Pmod Headers`             | `Hardware Input`      | `Receives the physical electrical signals from the Arduino via jumper wires.`               |
 | `Spartan-7 FPGA`               | `Processing`      | `Samples inputs at 100 MHz, checks against trigger logic, and buffers the captured data in BRAM.`                     |
-| `UART Module (FPGA)`    | `Data Output`      | `Converts the parallel buffered data into a serial data stream (115200 baud) over USB.`              |
+| `UART Module (FPGA)`    | `Data Output`      | `Converts the parallel buffered data into a serial data stream (921600 baud) over USB.`              |
 | `Python GUI (Laptop)`   | `Software Output / UI`      | `Parses the incoming hex data, visualizes the waveforms on-screen, and accepts user trigger configurations.`                             |
       
 
@@ -621,7 +621,7 @@ Describe the final version of your project.
 
 **Response:**  
 
-Our final project is a fully functional, 8-channel Embedded Logic Analyzer. The Spartan-7 FPGA successfully samples incoming digital signals from an Arduino Nano at 100 MHz, waits for a user-defined hardware trigger (like a rising edge), and captures the state of all 8 channels into its internal Block RAM (BRAM). Once the capture is complete, it streams the hex data over a 115200 baud USB-UART connection to a custom Python GUI on a laptop, which accurately graphs the waveforms for easy debugging.
+Our final project is a fully functional, 8-channel Embedded Logic Analyzer. The Spartan-7 FPGA successfully samples incoming digital signals from an Arduino Nano at 100 MHz, waits for a user-defined hardware trigger (like a rising edge), and captures the state of all 8 channels into its internal Block RAM (BRAM). Once the capture is complete, it streams the hex data over a 921600 baud USB-UART connection to a custom Python GUI on a laptop, which accurately graphs the waveforms for easy debugging.
 
 
 ## 17.2 What Works Well
@@ -636,7 +636,7 @@ Stability: The system reliably captures 2048 samples per trigger without droppin
 
 ## 17.3 What Still Needs Improvement
 
-Data Transfer Speed: While 115200 baud is standard, transferring large BRAM captures takes a second or two. Upgrading to a faster custom USB protocol would make it feel more instantaneous.
+Data Transfer Speed: While 921600 baud is standard, transferring large BRAM captures takes a second or two. Upgrading to a faster custom USB protocol would make it feel more instantaneous.
 
 Advanced Triggers: Currently, we only support simple edge triggers. Adding pattern triggers (e.g., trigger only when Ch1 is HIGH and Ch2 is LOW) would make it more powerful.
 
@@ -776,7 +776,7 @@ The Boolean Board FPGA inputs are 3.3 V only. Do not connect 5 V signals directl
 | `rtl/input_sampler.v` | Samples all 8 input pins together |
 | `rtl/trigger.v` | Immediate, rising edge, falling edge, and pattern trigger |
 | `rtl/bram_ctrl.v` | 32768 x 8 sample memory |
-| `rtl/uart.v` | 115200 baud USB-UART interface |
+| `rtl/uart.v` | 921600 baud USB-UART interface |
 | `rtl/cmd_parser.v` | Parses ASCII commands from the PC |
 | `rtl/data_tx.v` | Sends samples as hex text to the PC |
 | `logic_analyzer/gui/` | Python Tkinter GUI panels |
