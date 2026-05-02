@@ -538,7 +538,7 @@ What is the single biggest uncertainty in your project at this stage?
 
 **Response:**  
 
-
+Will the Python Tkinter GUI be able to process and graph the massive chunks of data coming from the FPGA smoothly, or will the graphical plot freeze/lag when we try to display thousands of sample points at once?
 ---
 
 # 14. Testing 
@@ -547,13 +547,14 @@ What is the single biggest uncertainty in your project at this stage?
 
 | What Needs Testing     | How You Will Test It                                                                 | Success Condition                                                                                    |
 | ---------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| `[Wifi connection]`    | `[Check if motor spins via app button]`                                              | `[Both motors accurately respond to wifi signals]`                                                   |
-                       |
+| `Trigger Accuracy`    | `[Write an Arduino script to send a single pulse. Tell the FPGA to trigger on a "Rising Edge".]`                                              | `[The captured waveform in the GUI starts exactly at the moment the signal goes from LOW to HIGH.]`                                                   |
+| `UART Reliability`    | `[Send a known dummy pattern (like 10101010) from the FPGA to the laptop 1,000 times.]`                                              | `[The Python console prints the exact pattern 1,000 times with zero dropped or corrupted bytes.]` |
+| `Multi-Channel Capture`    | `[Program the Arduino to blink pins D2 through D9 at different speeds, connect them to the FPGA.]`                                              | `[The GUI displays 8 distinct waveforms, each blinking at their correct, independent speeds.]` |
 ## 14.2 Testing and Debugging Log
 
 | Date          | Problem Found                         | Type         | What You Tried                                | Result               | Next Action                                    |
 | ------------- | ------------------------------------- | ------------ | --------------------------------------------- | -------------------- | ---------------------------------------------- |
-| `18th April`  | `Car not balancing properly`          | `Mechanical` | `Add low-friction caster support to one side` | `Worked`             | `improve caster structure`                     |
+| `30-04-2026`  | `Arduino 5V signal was dangerously close to FPGA's maximum tolerance.`          | `Hardware` | `Added 10k resistors in series between the Arduino and the Pmod header to limit current.` | `Worked. Signals read perfectly and the board stays safe.`             | `Finalize GUI layout`                     |
 
 
 ## 14.3 Playtesting Notes
