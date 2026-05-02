@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Vivado/generated build outputs
+.Xil/
+*.jou
+*.log
+*.str
+*.bit
+*.dcp
+*.runs/
+*.cache/
+*.hw/
+*.ip_user_files/
+*.sim/
+
+# Editor/temp files
+.~lock.*
+*.swp
+*~
+
+# Local scratch captures
+work.csv
