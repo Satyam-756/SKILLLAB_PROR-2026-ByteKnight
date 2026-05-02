@@ -455,11 +455,11 @@ Tasks divided by module (Verilog, Python GUI, testing, docs). Decisions made by 
 | Area                 | Main Owner     | Support Owner |
 | -------------------- | ----------     | ------------- |
 | Concept              | `[Mrugendra]`  | `[Jyoti]`     |
-| Electronics          | `[]`           | `[]`          |
-| Coding               | `[]`           | `[]`          |
-| Mechanical build     | `[]`           | `[]`          |
-| Testing              | `[]`           | `[]`          |
-| Documentation        | `[]`           | `[]`          |
+| Electronics          | `[Raunak]`           | `[Abhishek]`          |
+| Coding               | `[Abhishek]`           | `[Archit]`          |
+| Mechanical build     | `[Raunak]`           | `[Satyam]`          |
+| Testing              | `[Archit]`           | `[Satyam]`          |
+| Documentation        | `[Satyam]`           | `[Archit]`          |
 
 ---
 
@@ -513,10 +513,10 @@ Expected outcomes:
 
 | Days   | Planned Goal   | What Actually Happened | What Changed   | Next Steps     |
 | ------ | -------------- | ---------------------- | -------------- | -------------- |
-| Day 1 | `[Write here]` | `[Write here]`         | `[Write here]` | `[Write here]` |
-| Day 2 | `[Write here]` | `[Write here]`         | `[Write here]` | `[Write here]` |
-| Day 3 | `[Write here]` | `[Write here]`         | `[Write here]` | `[Write here]` |
-| Day 4 | `[Write here]` | `[Write here]`         | `[Write here]` | `[Write here]` |
+| Day 1 | `[Finalize idea and write basic Verilog UART communication.]` | `[Setup was smooth. Wrote UART module, Built the rising-edge trigger. Had some issues with random false triggers.]`         | `[Switched UART speed to 926100 baud for faster data streaming.]` | `[Connect the Arduino to generate test signals.]` |
+| Day 2 | `[Integrate Arduino hardware with FPGA and test data flow.]` | `[Hardware connected safely, but the Python GUI showed garbage data on the screen.]`         | `[Fixed a mismatch in the Python data decoding logic so it reads hex values properly.]` | `[Fix the Python plotting so the waves look clean.]` |
+| Day 3 | `[Finalize Python GUI]` | `[GUI successfully plotted all 8 channels in different colors.]`         | `[Added a "Save as CSV" button to make it easier to document our results.]` | `[Polish the documentation and README.]` |
+
 
 ---
 
@@ -526,7 +526,10 @@ Expected outcomes:
 
 | Risk                                                            | Type         | Likelihood | Impact   | Mitigation Plan                                                                       | Owner                |
 | --------------------------------------------------------------- | ------------ | ---------- | -------- | ------------------------------------------------------------------------------------- | -------------------- |
-| WiFi connection between laptop and ESP32 becomes unstable       | `Technical`  | `Medium`   | `High`   | Keep ESP32 close, ensure stable power supply, reduce network load, add fail-safe stop | `[Gopal]`           |
+| Frying the 3.3V FPGA pins with 5V Arduino signals | `Hardware`  | `low`   | `High`   | Use inline series resistors or voltage dividers on the jumper wires to drop the 5V to a safe 3.3V level. | `[Raunak]`           |
+| UART data dropping/corrupting during transfer      | `Technical`  | `Medium`   | `High`   | Send data in fixed-size blocks (e.g., 2048 samples) only after the trigger stops, rather than streaming continuously. | `[Abhishek]`           |
+| Python GUI freezing while plotting heavy data       | `Software`  | `Medium`   | `Medium`   | Use Matplotlib's fast-drawing mode, or only update the screen once a full capture is complete. | `[Satyam]`           |
+| False triggering from noisy jumper wires       | `Hardware`  | `High`   | `Low`   | Enable pull-down resistors on the FPGA inputs and keep jumper wires as short as possible. | `[Archit]`           |
 
 
 ## 13.2 Biggest Unknown Right Now
