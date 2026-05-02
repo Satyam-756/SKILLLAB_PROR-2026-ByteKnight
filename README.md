@@ -561,7 +561,7 @@ Will the Python Tkinter GUI be able to process and graph the massive chunks of d
 
 | Tester      | What They Did                        | What Confused Them                    | What They Enjoyed                         | What You Will Change                          |
 | ----------- | ------------------------------------ | ------------------------------------- | ----------------------------------------- | --------------------------------------------- |
-| `Gopal` | `Tried navigating through obstacles` | `Some obstacles ewren't clear enough` | `Liked projection + real car interaction` | `Add a slight red highlight around obstacles` |
+| `Archit` | `Zoomed in and out of the captured waveforms on the screen.` | `Couldn't easily tell which colored line corresponded to which Arduino pin.` | `Impressed by the speed and the fact that we used hardware BRAM.` | `Add clear labels (Ch 0, Ch 1, etc.) directly next to the colored lines on the Y-axis.` |
 
 
 ---
@@ -583,21 +583,15 @@ Include:
 - revisions.
 
 **Response:**  
-`The fabrication process involved designing, manufacturing, assembling, and refining both the physical structure and electronic integration of the system.`
+Since the core of this project relies on the Real Digital Boolean Board (Spartan-7 FPGA), heavy mechanical fabrication was not required. The physical build process focused on safe electronic integration and wire management:
 
-`Design (CAD Modeling):
-The initial model was created using CAD software, where components were designed based on the actual dimensions of the electronic parts. This ensured accurate fitting and minimized errors during assembly.
-Cutting (Laser Cutting):
-The designed parts were fabricated using laser cutting techniques. Sheets were cut precisely according to the CAD model to create the structural base and mounts for components.`
+Hardware Assembly: We mounted the Boolean Board on a non-conductive static mat.
 
-`Components were fixed using adhesives and mechanical supports. Certain parts were intentionally kept modular (not permanently fixed) to allow easy replacement and modification of electronics.
-Surface Finishing:
-Some parts were sanded to smooth rough edges after cutting. Sawdust mixed with adhesive was used to fill gaps and uneven edges, improving structural finish. The final structure was then painted for better aesthetics and durability.`
+Wiring Harness: We created a custom wiring harness using 8 jumper wires, binding them together to reduce wire clutter and minimize electromagnetic interference (EMI) acting as antennas.
 
-`Environment Setup (Dark Room Fabrication):
-To enhance projection visibility, a controlled dark environment was created using Z-boards, paper sheets, and bedsheets. This minimized external light interference and improved projection clarity.
-Revisions and Iterations:
-Multiple adjustments were made throughout the process, including refining alignment, improving structural stability, repositioning components, and optimizing the interaction between the physical car and projected environment.`
+Voltage Protection: We soldered inline 10k resistors to the jumper wires connecting the 5V Arduino Nano to the 3.3V FPGA Pmod header to ensure the FPGA pins were protected from overvoltage.
+
+Testing Setup: We secured the Arduino Nano to a breadboard next to the FPGA to create a stable, unified testing platform that wouldn't easily disconnect if bumped.
 
 ## 16 Build Photos
 
